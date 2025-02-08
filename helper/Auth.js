@@ -1,6 +1,7 @@
 import RetailerModel from "../models/Retailer.Model.js";
 import UserModel from "../models/User.Model.js";
 
+
 export const userAuth = async (req, res, next) => {
   const userId = req.cookies.userId;
   console.log("Cookie userId:", userId);
