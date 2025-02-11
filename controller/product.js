@@ -57,19 +57,23 @@ if (
 }
 
 export const createProduct = async (req, res) => {
+  
+      const { Name, Price, Quantity } = req.body;
+      const Retailer = req.retailer._id;
 
-    const { Name, Price,Quantity } = req.body;
-    const  Retailer = req.retailer._id
-    // Generate a unique QR code containing product details
+      let product = new Product({ Name, Price, Retailer, Quantity });
+      product = await product.save();
 
-    let product = new Product({ Name, Price, Retailer,Quantity });
-    product = await product.save();
-    // const qrCodeData = JSON.stringify({ type:"product",Name, Price, ID: product._id });
-    // const qrCode = await QRCode.toDataURL(qrCodeData);
+      res.status(201).json({
+          _id: product._id.toString(),
+          Name: product.Name,
+          Price: product.Price,
+          Quantity: product.Quantity
+      });
 
-    res.status(201).json({status:true});
+ 
+};
 
-}
 
 export const addToCart = async (req, res) => {
   try {
@@ -157,7 +161,7 @@ export const getProducts = async (req, res) => {
       Price: item.productId?.Price || 0,
       Quantity: item.quantity || 1,
     }));
-console.log(formattedData)
+    
     res.json(formattedData);
   } catch (error) {
     console.error("Error fetching products:", error);

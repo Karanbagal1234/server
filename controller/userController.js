@@ -118,8 +118,8 @@ export const userLogin = async (req, res) => {
 // Retailer login functionality
 export const retailLogin = async (req, res) => {
   const { Email, Password } = req.body;
-
-  // Find the retailer by email and populate store details
+await bcrypt.hash(Password,10)
+// Find the retailer by email and populate store details
   const retailer = await Retailer.findOne({ Email }).populate('Store');
   if (!retailer) {
     return res.status(404).json({ error: 'Retailer not found' });
@@ -221,6 +221,7 @@ export const getProductsForRetailer = async (req, res) => {
         Name: product.Name,
         Price: product.Price,
         ID: product._id,
+        Quantity: product.Quantity,
       };
 
       // Convert JSON object to string
@@ -235,6 +236,7 @@ export const getProductsForRetailer = async (req, res) => {
         Price: product.Price,
         ProductID: product._id,
         QRCode: qrCode, // Base64 QR image
+        Quantity: product.Quantity,
       };
     })
   );

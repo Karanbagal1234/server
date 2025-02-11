@@ -12,8 +12,7 @@ export const storeScan = async (req, res) => {
     const user = userId;
     const store = await Store.findById(storeId);
 
-console.log('pass');
-console.log('user :'+user)
+
 
     if (!user || !store) {
       return res.status(404).json({ error: "User or store not found" });
