@@ -1,6 +1,5 @@
 import RetailerModel from "../models/Retailer.Model.js";
-import UserModel from "../models/User.Model.js";
-
+import UserModel from "../models/User.js";
 
 export const userAuth = async (req, res, next) => {
   const userId = req.cookies.userId;
@@ -8,13 +7,11 @@ export const userAuth = async (req, res, next) => {
 
   if (!userId) {
     console.log("No userId found in cookies" + userId);
-    return res
-      .status(401)
-      .json({
-        error: "Unauthorized",
-        cookies: userId,
-        message: "No userId found in cookies",
-      });
+    return res.status(401).json({
+      error: "Unauthorized",
+      cookies: userId,
+      message: "No userId found in cookies",
+    });
   }
 
   const user = await UserModel.findById(userId);
@@ -27,7 +24,6 @@ export const userAuth = async (req, res, next) => {
   next();
 };
 export const retailerAuth = async (req, res, next) => {
-
   const retailerId = req.cookies.retailerId;
   if (!retailerId) {
     return res.status(401).json({ error: "Unauthorized" });

@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import Cart from "../models/Cart.js"; // Import Cart model
-import UserModel from '../models/User.Model.js';
+import UserModel from "../models/User.js";
 
 import Store from "../models/Store.model.js"; // Import Store model
 
@@ -11,8 +11,8 @@ const generateTransactionId = () => {
 
 // Controller to generate receipt data
 export const generateReceiptData = async (req, res) => {
-  const { cartId ,storeId} = req.body;
-  console.log(req.body)
+  const { cartId, storeId } = req.body;
+  console.log(req.body);
   const userId = req.user._id;
   try {
     // Fetch the user's cart
@@ -26,7 +26,7 @@ export const generateReceiptData = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-console.log(cart.sessionId)
+    console.log(cart.sessionId);
     // Fetch the store details
     const store = await Store.findById({ _id: storeId });
     if (!store) {
@@ -48,8 +48,6 @@ console.log(cart.sessionId)
       Price: item.productId.Price || faker.commerce.price(), // Use product price or generate a fake one
     }));
 
-   
-
     // Prepare store details
     const storeDetails = {
       name: store.StoreName,
@@ -63,10 +61,10 @@ console.log(cart.sessionId)
       storeDetails,
       transactionDetails,
       purchasedItems,
-      total:cart.total,
+      total: cart.total,
     };
     console.log(cart);
-    
+
     res.status(200).json(receiptData);
   } catch (error) {
     console.error("Error generating receipt data:", error);
