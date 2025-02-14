@@ -12,7 +12,6 @@ const generateTransactionId = () => {
 // Controller to generate receipt data
 export const generateReceiptData = async (req, res) => {
   const { cartId, storeId } = req.body;
-  console.log(req.body);
   const userId = req.user._id;
   try {
     // Fetch the user's cart
@@ -26,7 +25,6 @@ export const generateReceiptData = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    console.log(cart.sessionId);
     // Fetch the store details
     const store = await Store.findById({ _id: storeId });
     if (!store) {
@@ -63,7 +61,6 @@ export const generateReceiptData = async (req, res) => {
       purchasedItems,
       total: cart.total,
     };
-    console.log(cart);
 
     res.status(200).json(receiptData);
   } catch (error) {

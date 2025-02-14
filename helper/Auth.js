@@ -6,7 +6,6 @@ export const userAuth = async (req, res, next) => {
   console.log("Cookie userId:", userId);
 
   if (!userId) {
-    console.log("No userId found in cookies" + userId);
     return res.status(401).json({
       error: "Unauthorized",
       cookies: userId,
@@ -16,7 +15,6 @@ export const userAuth = async (req, res, next) => {
 
   const user = await UserModel.findById(userId);
   if (!user) {
-    console.log("User not found in database");
     return res.status(401).json({ error: "Unauthorized" });
   }
 

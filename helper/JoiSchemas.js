@@ -77,37 +77,7 @@ const retailerRegisterSchema = Joi.object({
     "string.max": "Phone Number should not exceed 15 characters.",
     "any.required": "Phone Number is required.",
   }),
-  BusinessRegistrationNumber: Joi.string().min(3).max(50).required().messages({
-    "string.base": "Business Registration Number should be a string.",
-    "string.empty": "Business Registration Number is required.",
-    "string.min":
-      "Business Registration Number should be at least 3 characters long.",
-    "string.max":
-      "Business Registration Number should not exceed 50 characters.",
-    "any.required": "Business Registration Number is required.",
-  }),
-  TaxIdentificationNumber: Joi.string().min(3).max(50).required().messages({
-    "string.base": "Tax Identification Number should be a string.",
-    "string.empty": "Tax Identification Number is required.",
-    "string.min":
-      "Tax Identification Number should be at least 3 characters long.",
-    "string.max": "Tax Identification Number should not exceed 50 characters.",
-    "any.required": "Tax Identification Number is required.",
-  }),
-  OperatingHours: Joi.string().min(5).required().messages({
-    "string.base": "Operating Hours should be a string.",
-    "string.empty": "Operating Hours are required.",
-    "string.min": "Operating Hours should be at least 5 characters long.",
-    "any.required": "Operating Hours are required.",
-  }),
-  PaymentMethods: Joi.array()
-    .items(Joi.string().valid("Cash", "Card", "Online", "Other"))
-    .required()
-    .messages({
-      "array.base": "Payment Methods should be an array.",
-      "any.required": "Payment Methods are required.",
-      "any.only": "Payment Methods can only be Cash, Card, Online, or Other.",
-    }),
+
 });
 
 const updateProfileSchema = Joi.object({

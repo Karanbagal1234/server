@@ -70,7 +70,7 @@ export const updateCart = async (req, res) => {
   let cart =
     (await Cart.findOne({ userId })) ||
     new Cart({ userId, items: [], total: 0 });
-
+console.log("a new cart genrated id : " , cart._id)
   // Find existing item index
   const itemIndex = cart.items.findIndex((item) =>
     item.productId.equals(productObjectId)
@@ -126,9 +126,7 @@ export const getCartHistory = async (req, res) => {
     path: "cartHistory.cartId",
     populate: { path: "items.productId", model: "Product" },
   });
-  console.log("h");
 
-  console.log(user);
 
   if (!user) {
     return res.status(404).json({ error: "User not found" });
@@ -152,13 +150,29 @@ export const getPurchasesHistory = async (req, res) => {
     .populate("cartId", "amount items status")
     .sort({ createdAt: -1 });
 
-  const result = sessions.map((session) => ({
-    Date: session.createdAt,
-    Store: session.storeId?.StoreName || "Unknown",
-    Amount: session.cartId?.amount || 0,
-    Items: session.cartId?.items || [],
-    Status: session.cartId?.status || "Pending",
-  }));
+  const result = sessions.map((session) => {
+    const date = new Date(session.createdAt);
+    const formattedDate = date
+      .toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      })
+      .split("/")
+      .join("-"); // Converts "23/11/2004" to "23-11-2004"
+
+    const day = date.toLocaleDateString("en-GB", { weekday: "short" }); // "Wed"
+
+    return {
+      Date: `${formattedDate} ${day}`,
+      Store: session.storeId?.StoreName || "Unknown",
+      Amount: session.cartId?.amount || 0,
+      Items: session.cartId?.items || [],
+      Status: session.cartId?.status || "Pending",
+      cartId:session.cartId._id,
+      storeId:session.storeId._id
+    };
+  });
 
   res.status(200).json(result);
 };

@@ -23,7 +23,6 @@ export const storeScan = async (req, res) => {
 
   // Start a new session
   const session = new StoreSession({ userId, storeId });
-  console.log(session);
   await session.save();
 
   // Create a new cart and link it to the session
@@ -33,6 +32,9 @@ export const storeScan = async (req, res) => {
     items: [],
     total: 0,
   });
+console.log("a new cart genrated id : " , cart._id)
+  
+
   await cart.save();
 
   // Update the session with the cart ID
@@ -45,7 +47,7 @@ export const storeScan = async (req, res) => {
       _id: session._id,
       userId: session.userId,
       storeId: session.storeId,
-      cartId: session.cartId,
+      cartId: cart._id,
       startedAt: session.startedAt,
     },
   });

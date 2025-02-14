@@ -9,7 +9,6 @@ import QRCode from "qrcode";
 // Register new user
 export const userRegister = async (req, res) => {
   const { Name, Email, Password, PhoneNumber, Address } = req.body;
-  console.log("req.body", req.body);
 
   // Check if user already exists in the database
   const existingUser = await UserModel.findOne({ Email });
@@ -52,10 +51,7 @@ export const retailRegister = async (req, res) => {
     StoreName,
     StoreAddress,
     PhoneNumber,
-    BusinessRegistrationNumber,
-    TaxIdentificationNumber,
-    OperatingHours,
-    PaymentMethods,
+  
   } = req.body;
 
   // Check if retailer already exists in the database
@@ -69,10 +65,6 @@ export const retailRegister = async (req, res) => {
     StoreName,
     StoreAddress,
     PhoneNumber,
-    BusinessRegistrationNumber,
-    TaxIdentificationNumber,
-    OperatingHours,
-    PaymentMethods,
   });
   await store.save();
 
@@ -241,6 +233,7 @@ export const getProductsForRetailer = async (req, res) => {
         Price: product.Price,
         ID: product._id,
         Quantity: product.Quantity,
+     
       };
 
       // Convert JSON object to string
@@ -256,6 +249,7 @@ export const getProductsForRetailer = async (req, res) => {
         ProductID: product._id,
         QRCode: qrCode, // Base64 QR image
         Quantity: product.Quantity,
+        Tax: product.Tax,
       };
     })
   );

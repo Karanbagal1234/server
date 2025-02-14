@@ -1,10 +1,7 @@
 import mongoose from "mongoose";
 import shortid from "shortid";
 const StoreSchema = new mongoose.Schema({
-    StoreId: {
-      type: String,
-      default: shortid.generate,
-    },
+  
     StoreName: {
       type: String,
       required: true,
@@ -19,19 +16,15 @@ const StoreSchema = new mongoose.Schema({
     },
     BusinessRegistrationNumber: {
       type: String,
-      required: true,
     },
     TaxIdentificationNumber: {
       type: String,
-      required: true,
     },
     OperatingHours: {
       type: String,
-      required: true,
     },
     PaymentMethods: {
-      type: [String], // Array of payment methods like ["Credit Card", "Cash", etc.]
-      required: true,
+      type: [String], 
     },
   });
   

@@ -16,6 +16,7 @@ import ProductRouter from "./routes/product.js";
 import StoreRouter from "./routes/Store.js";
 import CartRouter from "./routes/cart.js";
 import DigitalReceipt from "./routes/recipt.js";
+// import ChatBot from "./routes/OpenAi.js"
 dotenv.config();
 
 const app = express();
@@ -55,6 +56,7 @@ app.use(cookieParser());
 // Request Logging Middleware
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  console.log("cartId :"+req.body.cartId)
   next();
 });
 
@@ -64,6 +66,7 @@ app.use("/api/v1/product", ProductRouter);
 app.use("/api/v1/store", StoreRouter);
 app.use("/api/v1/cart", CartRouter);
 app.use("/api/v1/receipt",DigitalReceipt)
+// app.use("/api/v1/openAi",ChatBot)
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to the API" });
 });
