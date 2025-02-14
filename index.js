@@ -16,7 +16,6 @@ import ProductRouter from "./routes/product.js";
 import StoreRouter from "./routes/Store.js";
 import CartRouter from "./routes/cart.js";
 import DigitalReceipt from "./routes/recipt.js";
-// import ChatBot from "./routes/OpenAi.js"
 dotenv.config();
 
 const app = express();
@@ -25,14 +24,14 @@ const app = express();
 app.use(helmet()); // Sets security headers
 app.use(compression()); // Compress responses
 
-// Rate Limiting (50 requests per 15 minutes per IP)
-// const limiter = rateLimit({
-//   windowMs: 15 * 60 * 1000, 
-//   max: 50,
-//   message: "Too many requests from this IP, please try again later.",
-// });
+Rate Limiting (50 requests per 15 minutes per IP)
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, 
+  max: 50,
+  message: "Too many requests from this IP, please try again later.",
+});
 
-// app.use(limiter);
+app.use(limiter);
 
 // CORS Configuration
 const corsOptions = {
