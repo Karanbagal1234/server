@@ -21,21 +21,17 @@ dotenv.config();
 const app = express();
 
 // Security Middleware
-app.use(helmet({
-  crossOriginResourcePolicy: { policy: "cross-origin" },
-}));
-
+app.use(helmet()); // Sets security headers
 app.use(compression()); // Compress responses
 
 // Rate Limiting (50 requests per 15 minutes per IP)
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, 
-  max: 50,
-  message: "Too many requests from this IP, please try again later.",
-});
+// const limiter = rateLimit({
+//   windowMs: 15 * 60 * 1000, 
+//   max: 50,
+//   message: "Too many requests from this IP, please try again later.",
+// });
 
-app.use("/api", limiter);
-
+// app.use(limiter);
 
 // CORS Configuration
 const corsOptions = {
